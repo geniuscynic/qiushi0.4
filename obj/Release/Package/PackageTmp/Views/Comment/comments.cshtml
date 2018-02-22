@@ -1,0 +1,191 @@
+﻿@model IEnumerable<CommentEntity>
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="card comment">
+    <div class="card-body">
+        <h4>评论 (72)</h4>
+    </div>
+
+    @*@foreach (var comment in Model)
+        {
+            <div class="card-body">
+
+                @foreach (var parentComment in comment.ParentComments.Reverse())
+                {
+                    @:<div class="card-comment card-comment-quote">
+                        <div class="card-title media">
+
+                            <div class="card-title media">
+                                <img class="d-flex mr-2" src="http://www.qiushibaike.com/static/images/thumb/missing.png" alt="谢哥在搞基123">
+                                <div class="media-body align-self-center">
+                                    <a href="/users/7053545">@parentComment.CommentAncestor.UpdateUser.LoginName</a>
+                                </div>
+                            </div>
+                            <div class="card-comment-text">@parentComment.CommentAncestor.Floor 楼</div>
+                        </div>
+
+                }
+
+                @foreach (var parentComment in comment.ParentComments)
+                {
+                    <div class="card-comment-text">  @parentComment.CommentAncestor.Content</div>
+
+                    @:</div>
+                }
+            </div>
+        }*@
+
+    @foreach (var comment in Model)
+    {
+        <div class="card-body">
+            <div class="card-comment">
+                <div class="card-title media">
+                    <img class="d-flex mr-2" src="http://www.qiushibaike.com/static/images/thumb/missing.png" alt="谢哥在搞基123">
+                    <div class="media-body align-self-center">
+                        <a href="/users/7053545">@comment.UpdateUser.NickName</a>
+                    </div>
+
+                    <div class="card-comment-text">@comment.Floor 楼</div>
+                </div>
+
+                <div class="card-comment card-comment-quote">
+                    @foreach (var parentComment in comment.ParentCommentsEntity.Reverse())
+                    {
+                        if (parentComment.Id == comment.Id)
+                        {
+                            continue;
+                        }
+
+                        @:<div class="card-comment card-comment-quote">
+                            <div class="card-title media">
+
+                                <div class="media-body align-self-center">
+                                    <a href="/users/7053545">@parentComment.UpdateUser.LoginName</a>
+                                </div>
+                                <div class="card-comment-text">@parentComment.Floor 楼</div>
+                            </div>
+                    }
+
+                    @foreach (var parentComment in comment.ParentCommentsEntity)
+                    {
+                        if (parentComment.Id == comment.Id)
+                        {
+                            continue;
+                        }
+
+                        <div class="card-comment-text">  @parentComment.Content</div>
+
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link articleGood" data-value="1" href="#"><span class="oi icon" data-glyph="thumb-up" title="thumb-up" aria-hidden="true"></span> <span>@comment.GoodNum</span></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link articleBad" data-value="-1" href="#"><span class="oi icon" data-glyph="thumb-down" title="thumb-down" aria-hidden="true"></span> <span>@comment.BadNum</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link articleComment" href="#" data-id="@parentComment.Id"><span class="oi icon" data-glyph="pencil" title="pencil" aria-hidden="true" ></span> @parentComment.ChildCommentsNumber</a>
+                            </li>
+                        </ul>
+                        @:</div>
+                    }
+                    <div class="card-comment-text"> @comment.Content</div>
+
+
+                </div>
+
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link articleGood" data-value="1" href="#"><span class="oi icon" data-glyph="thumb-up" title="thumb-up" aria-hidden="true"></span> <span>@comment.GoodNum</span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link articleBad" data-value="-1" href="#"><span class="oi icon" data-glyph="thumb-down" title="thumb-down" aria-hidden="true"></span> <span>@comment.BadNum</span></a>
+                    </li>
+                    <li class="nav-item">
+                        @{ var childCount = comment.ChildCommentsNumber;}
+                        <a class="nav-link articleComment" href="#" data-id="@comment.Id"><span class="oi icon" data-glyph="pencil" title="pencil" aria-hidden="true" ></span> @childCount</a>
+
+                    </li>
+
+
+                </ul>
+
+
+                @*<form action="@Url.Action("SaveComments", "Article")" method="post">
+                        <div class="form-group row">
+
+                            <input type="hidden" name="commentId" value="@comment.Id" />
+                            <input type="hidden" name="articleId" value="@ViewBag.ArticleId" />
+                            <textarea class="form-control" rows="6" id="content" name="content" data-required="内容不能为空"></textarea>
+                            <div class="invalid-feedback"></div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">提交</button>
+                            </div>
+                        </div>
+                    </form>*@
+            </div>
+
+        </div>
+
+                            }
+
+
+    <div class="card-body">
+        <div class="card-comment card-comment-edit">
+            <form id="form">
+                <div class="form-group row">
+                    <h4>添加评论</h4>
+                    <input type="hidden" name="commentId" value="0" />
+                    <input type="hidden" name="articleId" value="@ViewBag.ArticleId" />
+                    <textarea class="form-control" rows="6" id="content" name="content" data-required="内容不能为空"></textarea>
+                    <div class="invalid-feedback"></div>
+                    <div name="addcomment"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" id="btnSubmit">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">评论</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="@Url.Action("SaveComments", "Article")" method="post" id="formModal">
+                        <div class="form-group">
+                            <input type="hidden" name="commentId" value="0" id="commentIdModal" />
+                            <input type="hidden" name="articleId" value="@ViewBag.ArticleId" id="articleIdModal" />
+                            <textarea class="form-control" rows="6" id="contentModal" name="content" data-required="内容不能为空"></textarea>
+                            <div class="invalid-feedback"></div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+                    <button type="button" class="btn btn-primary" id="btnSave">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

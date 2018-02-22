@@ -1,0 +1,120 @@
+﻿@using StackExchange.Profiling;
+
+@{
+
+    ViewBag.Title = "囧人囧事";
+
+
+}
+
+@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+
+    string active1 = "", active2 = "", active3 = "", active4 = "";
+
+    if (controller == "Home" && action == "Index")
+    {
+        active1 = "active";
+
+    }
+    else if (controller == "Home" && action == "List")
+    {
+        active1 = "active";
+    }
+    else if (controller == "Home" && action == "Hot")
+    {
+        active2 = "active";
+    }
+    else if (controller == "Home" && action == "TravelBack")
+    {
+        active3 = "active";
+    }
+    else if (controller == "Article" && action == "Index")
+    {
+        active4 = "active";
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="囧,囧人,囧事,囧人囧事,笑话,爆笑笑话,幽默笑话,笑话大全,xiaohua,冷笑话,短信笑话,小笑话集锦,笑话短信,经典笑话,冷笑话大全,短笑话,搞笑短信,笑话吧,搞笑笑话,搞笑,幽默笑话,内涵段子,糗事" />
+    <meta name="description" content="囧人囧事提供各种笑话,有经典笑话,幽默笑话,爆笑笑话,冷笑话,小笑话集锦,笑话大全,短信笑话,短笑话,爆笑短信,笑话短信,笑话故事,搞笑笑话,笑话吧,笑话大全乐翻天,开心每一天!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <h1 style="display:none">囧,囧人,囧事,囧人囧事,笑话,爆笑笑话,幽默笑话,笑话大全,xiaohua,冷笑话,短信笑话,小笑话集锦,笑话短信,经典笑话,冷笑话大全,短笑话,搞笑短信,笑话吧,搞笑笑话,搞笑,幽默笑话,内涵段子,糗事,</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                <img alt="囧人囧事" src="~/Content/img/logo.jpg" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item @active1">
+                        <a class="nav-link" href="@Url.Action("Index","Home")">最新</a>
+                    </li>
+                    <li class="nav-item @active2">
+                        <a class="nav-link" href="@Url.Action("Hot","Home", new { page = 1})">热门</a>
+                    </li>
+                    <li class="nav-item @active3">
+                        <a class="nav-link" href="@Url.Action("TravelBack","Home", new { page = 1})">穿越</a>
+                    </li>
+                    <li class="nav-item @active4">
+                        <a class="nav-link" href="@Url.Action("Index","Article")">投稿</a>
+                    </li>
+                </ul>
+
+                @{Html.RenderPartial("_LoginPartial");}
+            </div>
+
+
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-9">
+                @RenderBody()
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        打赏下囧人囧事
+                    </div>
+                    <img class="card-img-top" src="@Url.Content("~/Content/img/weixin.png")" alt="囧人囧事">
+
+
+                    <img class="card-img-top" src="@Url.Content("~/Content/img/zhifubao.jpg")" alt="囧人囧事">
+
+                </div>
+
+
+            </div>
+        </div><!-- /.container -->
+    </div>
+
+
+    @{Html.RenderPartial("_foot");}
+
+    @MiniProfiler.RenderIncludes()
+
+    @Scripts.Render("~/bundles/js")
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

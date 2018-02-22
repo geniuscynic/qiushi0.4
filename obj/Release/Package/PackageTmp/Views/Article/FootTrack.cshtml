@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ArticleEntity>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+
+<h2>我的糗事</h2>
+
+
+<div class="card articles">
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="card-body articleBody">
+            <a href="@Url.Action("Detail", "Home", new { id = item.Id})" class="normalA">
+                <p class="card-text">@item.Content</p>
+
+                @if (item.Attachments != null && item.Attachments.Count() > 0)
+                {
+                    <img class="img-fluid" src="@item.Attachments.First().Url" alt="Card image cap">
+                }
+            </a>
+            <p class="card-text text-right">发布时间：@item.CreatedTime</p>
+
+            <div class=" d-flex justify-content-between ">
+                <ul class="nav card-bottom ">
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="#"> </a>
+
+                    </li>
+
+                </ul>
+
+                <ul class="nav card-bottom">
+
+                    <li class="nav-item">
+                        <a class="nav-link thumb-up" href="#"><span class="oi icon" data-glyph="thumb-up" title="thumb-up" aria-hidden="true"></span> 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="oi icon" data-glyph="thumb-down" title="thumb-down" aria-hidden="true"></span> 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="oi icon" data-glyph="comment-square" title="comment-square" aria-hidden="true"></span> 1</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    }
+
+
+</div>
+
+
+@{Html.RenderPartial("_PageNavigationPartial");}

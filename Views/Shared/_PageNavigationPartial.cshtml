@@ -1,0 +1,141 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+    //if(action== "Index")
+    //{
+    //    action = "list";
+    //}
+    //var action = "list";
+
+    if (controller == "Home" && action == "Index")
+    {
+        action = "List";
+    }
+    else if (controller == "Home" && action == "ListArticle")
+    {
+        controller = "User";
+        action = "GetUser";
+    }
+    var currentStatus = ViewContext.RouteData.Values["status"];
+    if (currentStatus == null)
+    {
+        currentStatus = "Page";
+    }
+
+    int totalPage = ViewBag.TotalPage;
+    int currentPage = ViewBag.CurrentPage;
+
+
+
+    int halfPages = 5;
+
+    int beginPage = currentPage - halfPages;
+    if (beginPage < 1)
+    {
+        beginPage = 1;
+    }
+
+
+    int endPage = currentPage + halfPages - 1;
+
+
+    if (endPage > totalPage)
+    {
+        endPage = totalPage;
+    }
+}
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (controller == "Comment" || (controller == "Article" && action == "FootTrack") || controller == "Home" || (controller == "User" && action == "List"))
+        {
+            if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { page = currentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+
+                    </a>
+                </li>
+            }
+
+            for (int i = beginPage; i <= endPage; i++)
+            {
+                var styles = i == currentPage ? "active" : "";
+
+                <li class="page-item @styles"><a class="page-link" href="@Url.Action(action, controller, new {  page = i })">@i</a></li>
+            }
+
+            if (currentPage < totalPage)
+            {
+
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { page = currentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        }
+
+        else if (controller == "User" && action == "GetUser")
+        {
+            if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { page = currentPage - 1, id= ViewContext.RouteData.Values["id"]})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+
+                    </a>
+                </li>
+            }
+
+            for (int i = beginPage; i <= endPage; i++)
+            {
+                var styles = i == currentPage ? "active" : "";
+
+                <li class="page-item @styles"><a class="page-link" href="@Url.Action(action, controller, new {  page = i, id= ViewContext.RouteData.Values["id"] })">@i</a></li>
+            }
+
+            if (currentPage < totalPage)
+            {
+
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { page = currentPage + 1, id= ViewContext.RouteData.Values["id"] })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        }
+
+        else
+        {
+            if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { status = currentStatus, page = currentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+
+                    </a>
+                </li>
+            }
+
+            for (int i = beginPage; i <= endPage; i++)
+            {
+                var styles = i == currentPage ? "active" : "";
+
+                <li class="page-item @styles"><a class="page-link" href="@Url.Action(action, controller, new { status = currentStatus, page = i })">@i</a></li>
+            }
+
+            if (currentPage < totalPage)
+            {
+
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action(action, controller, new { status = currentStatus, page = currentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</nav>

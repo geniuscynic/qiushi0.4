@@ -1,0 +1,123 @@
+﻿@model ArticleEntity
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.Title = "糗事管理";
+
+    //var fileUrl = "";
+    //var attachmentId = 0;
+    //if (Model.Attachments != null)
+    //{
+    //    var attachment = Model.Attachments.FirstOrDefault();
+
+    //    if (attachment != null)
+    //    {
+    //        fileUrl = attachment.Url;
+    //        attachmentId = attachment.Id;
+    //    }
+    //}
+}
+
+@{Html.RenderPartial("_MessagePartial");}
+
+<div class="card">
+
+    <div class="card-body">
+
+        <form enctype="multipart/form-data" action="@Url.Action("Save")" method="post">
+            <div class="form-group row">
+                <label for="user" class="col-form-label">糗事</label>
+                <textarea class="form-control" rows="6" id="content" name="content" data-required="内容不能为空">@Model.Content</textarea>
+                <div class="invalid-feedback"></div>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
+            </div>
+
+            <div class="form-group row uploadToolBar">
+                <input type="file" id="file" class="form-control-file" />
+            </div>
+
+            <div class="form-group" id="loading">
+                <img src="~/Content/img/loading.gif" alt="...">
+            </div>
+            <div class="form-group" id="imgTable" style="display:none">
+                <div class="col-2">
+                    <img src="" alt="...">
+                </div>
+                <div class="col-4" style="padding-top:20px;">
+                    <button type="button" class="btn btn-danger" aria-label="Left Align" id="remove">
+                        <span class="oi" data-glyph="x" title="x" aria-hidden="true"></span>
+                    </button>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">发表</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#loading").hide();
+
+            $("#btnSubmit").on("click", function () {
+                return $.validate();
+            });
+
+            $("#file").on("change", function (event) {
+                var files = event.target.files[0];
+
+                var formData = new FormData();
+                formData.append("file", files);
+               
+                $.ajax({
+                    url: '@Url.Action("UploadFile", "Article")',
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $("#loading").show();
+                        $(".uploadToolBar").hide();
+                    }
+                })
+                    .done(function (data) {
+                        $("#loading").hide();
+
+                        $("#fileUrl").val(data);
+                        $("#imgTable img").attr("src", data);
+                        // } else if (data.responseCode == 0) {
+                        //     alert('上传失败');
+                        //  }
+
+                        $(".uploadToolBar").hide();
+                        $("#imgTable").show();
+                    });
+            });
+
+            $("#remove").on("click", function () {
+                $("#fileUrl").val("");
+                $("#imgTable").hide();
+                $(".uploadToolBar").show();
+                $("#file").val("");
+                $("#AttachmentId").val("0");
+            });
+
+
+            @if (@Model.Id > 0 &&  @Model.Attachments != null && @Model.Attachments.Count() > 0) {
+            @: $("#imgTable").show();
+            }
+        });
+
+    </script>
+}

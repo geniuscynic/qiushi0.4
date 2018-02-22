@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ArticleEntity>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+@{
+    var status = ViewContext.RouteData.Values["status"].ToString();
+    //var status = Request.QueryString["status"].ToString();
+
+    string active1 = "", active2 = "", active3 = "", active4 = "";
+    switch (status.ToLower())
+    {
+        case "all":
+            active1 = "active";
+            break;
+        case "pending":
+            active2 = "active";
+            break;
+        case "pass":
+            active3 = "active";
+            break;
+        case "faild":
+            active4 = "active";
+            break;
+
+    }
+}
+
+<h2>我的糗事</h2>
+
+
+<div class="card articles">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link @active1" href="@Url.Action("List","Article",new { status="All",page=1 })">全部糗事</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @active2" href="@Url.Action("List","Article",new { status="Pending",page=1 })">待审核</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @active3" href="@Url.Action("List","Article",new { status="Pass",page=1 })">
+                    已发表
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @active4" href="@Url.Action("List","Article",new { status="Faild",page=1 })">
+                    未通过
+                </a>
+            </li>
+        </ul>
+    </div>
+   
+        @foreach (var item in Model)
+        {
+            Html.RenderPartial("_ArticleDetailPartial", item);
+        }
+   
+  
+</div>
+
+
+@{Html.RenderPartial("_PageNavigationPartial");}

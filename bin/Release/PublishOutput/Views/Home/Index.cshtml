@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ArticleEntity>
+
+@{
+    
+    ViewBag.Title = "囧人囧事";
+}
+
+@foreach (var item in Model)
+{
+    <div class="card " data-id="@item.Id">
+        <div class="card-body home-cardbody">
+            <div class="card-title media">
+                <img class="d-flex mr-2 img-circle rounded-circle" src="@Url.Content("~/UserImage/" + item.UpdateUser.UserImage)" alt="囧人囧事">
+                <div class="media-body align-self-center">
+                    <a href="@Url.Action("GetUser","User", new { id = item.UpdateBy, page = 1})">@item.UpdateUser.NickName</a>
+                </div>
+            </div>
+            <a href="@Url.Action("Detail", "Home", new { id = item.Id})" class="normalA">
+                <p class="card-text">@Html.Raw(item.Content)</p>
+                @if (item.Attachments != null && item.Attachments.Count() > 0)
+                {
+                    <img class="img-fluid" src="@item.Attachments.First().Url" alt="Card image cap">
+                }
+            </a>
+        </div>
+
+        <ul class="nav homenav">
+            <li class="nav-item">
+                <a class="nav-link articleGood" data-value="1" href="#"><span class="oi icon" data-glyph="thumb-up" title="thumb-up" aria-hidden="true"></span> <span>@item.GoodNum</span></a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link articleBad" data-value="-1" href="#"><span class="oi icon" data-glyph="thumb-down" title="thumb-down" aria-hidden="true"></span> <span>@item.BadNum</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link articleComment" href="#"><span class="oi icon" data-glyph="pencil" title="pencil" aria-hidden="true"></span> @item.Comments.Count()</a>
+            </li>
+
+        </ul>
+    </div>
+}
+
+@{Html.RenderPartial("_PageNavigationPartial");}
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".articleComment").on("click", function () {
+
+                @if(Session["User"] == null)
+                {
+                    @:window.location.href = "@Url.Action("Login", "Account")";
+                    @:return;
+
+                }
+
+                var url = "@Url.Action("Detail", "Home")";
+
+                window.location.href = url + "/" + $(this).parents(".card").attr("data-id") + "#content";
+            });
+
+
+
+            $(".articleGood,.articleBad").on("click", function () {
+
+                @if(Session["User"] == null)
+                {
+                    @:window.location.href = "@Url.Action("Login", "Account")";
+                    @:return;
+
+                }
+
+                var data = "id=" + $(this).parents(".card").attr("data-id");
+                data += "&value=" + $(this).attr("data-value");
+
+                var article = this;
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GoodBad", "Article")",
+                    data: data
+                })
+                    .done(function (returnData) {
+                        if (isNaN(returnData)) {
+                            window.location.href = "@Url.Action("Login", "Account")";
+                        }
+                        else if (returnData == 1) {
+                            var value = $(article).children().last().text();
+                            $(article).children().last().text(parseInt(value) + 1);
+                        }
+                    });
+            });
+
+            @*$(".card-body").on("click", function () {
+                 var url = "@Url.Action("Detail", "Home")";
+
+                 window.location.href = url + "/" + $(this).parents(".card").attr("data-id");
+            });*@
+
+        });
+
+    </script>
+}

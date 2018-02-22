@@ -1,0 +1,82 @@
+﻿@model IEnumerable<qiushi.Entity.UserEntity>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>管理用户</h2>
+
+<div class="card " >
+    <div class="card-body">
+
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    帐号
+                </th>
+                <th>
+                    昵称
+                </th>
+                <th>
+                    角色
+                </th>
+                <th>
+                    帖子数/通过数
+                </th>
+                <th>
+                    审核数/通过数
+                </th>
+                <th>
+                    最后登入时间
+                </th>
+                <th>
+                    编辑
+                </th>
+               
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.LoginName
+                    </td>
+                    <td>
+                        @item.NickName
+                    </td>
+                    <td>
+                        @item.UserRole.First().Role.Name
+                    </td>
+                    <td>
+                        @item.ArticlesNum / @item.PassNum
+                    </td>
+                    <td>
+                        @item.VerifyNum / @item.VerifyPassNum
+                    </td>
+                    <td>
+                        @item.UpdateTime.ToShortDateString()
+                    </td>
+                    <td>
+                        @if (item.ActiveStatus == Constant.ActiveStatus.Active)
+                         {
+                            <a href="@Url.Action("Disable", "User", new { id = item.Id, page = ViewBag.CurrentPage })" class="btn btn-default">禁用</a>
+                         }
+                        else
+                        {
+                           <a href="@Url.Action("Enable", "User", new { id = item.Id, page = ViewBag.CurrentPage })" class="btn btn-default">启用</a>
+                        }
+
+                        @*<a href="@Url.Action("Index", "User")" class="btn btn-default" >编辑</a>*@
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>
+
+@{Html.RenderPartial("_PageNavigationPartial");}
+
+

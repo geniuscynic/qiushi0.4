@@ -1,0 +1,25 @@
+﻿@{
+    List<MessageEntity> messageEntities = ViewBag.MessageEntities;
+ }
+
+@if (messageEntities != null && messageEntities.Count > 0)
+{
+    if (messageEntities.First().MessageType == Constant.MessageType.Successfully)
+    {
+        <div class="alert alert-primary" role="alert">
+            @foreach (var message in messageEntities)
+            {
+                <div class="d-flex justify-content-center">@message.Message</div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger " role="alert">
+            @foreach (var message in messageEntities)
+            {
+                <div class="d-flex justify-content-center">@message.Message</div>
+            }
+        </div>
+    }
+}

@@ -1,0 +1,80 @@
+﻿@model ArticleEntity
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>审核糗事</h2>
+
+<div class="card articles">
+
+
+    <div class="card-body articleBody ">
+        @if (Model == null)
+        {
+            <p class="card-text">没有需要审核的糗事</p>
+        }
+        else
+        {
+            <p class="card-text">@Model.Content</p>
+
+            if (Model.Attachments != null && Model.Attachments.Count() > 0)
+            {
+                <img class="img-fluid" src="@Model.Attachments.First().Url" alt="Card image cap">
+            }
+
+            <p class="card-text text-right">发布时间：@Model.CreatedTime</p>
+
+            <div class=" d-flex justify-content-center ">
+                <a class="btn " href="#" data-value="true"><img src="@Url.Content("~/Content/img/smiley_grin.png")" alt="顶" style="width:50px" /></a>
+
+                <a class="btn" href="#" data-value="false">
+                    <img src="@Url.Content("~/Content/img/smiley_angry.png")" alt="踩" style="width:50px" />
+                </a>
+            </div>
+        }
+    </div>
+
+
+</div>
+
+
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".btn").on("click", function (event) {
+               
+                var modelId = 0;
+                @if(Model != null)
+                {
+                    @:modelId = "@Model.Id";
+                }
+
+               // var formData = new FormData();
+              
+                var formData = "id=" + modelId + "&value=" + $(this).attr("data-value")
+
+                $.ajax({
+                    url: '@Url.Action("Verify")',
+                    type: 'post',
+                    data: formData,
+                    
+                    beforeSend: function () {
+                      
+                    }
+                })
+                .done(function (data) {
+                    //if (data) {
+                        location.href = "@Url.Action("NeedVerify")";
+                    //}
+                });
+            });
+
+           
+        });
+
+    </script>
+}

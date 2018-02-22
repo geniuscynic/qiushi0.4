@@ -1,0 +1,72 @@
+﻿@using StackExchange.Profiling;
+
+@{
+
+    ViewBag.Title = "囧人囧事";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                <img alt="囧人囧事" src="~/Content/img/logo.jpg" />
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="@Url.Action("Index","Home")">最新</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="@Url.Action("Hot","Home", new { page = 1})">热门</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="@Url.Action("TravelBack","Home", new { page = 1})">穿越</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="@Url.Action("Index","Article")">投稿</a>
+                    </li>
+                </ul>
+
+                @{Html.RenderPartial("_LoginPartial");}
+            </div>
+
+
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-9">
+                @RenderBody()
+            </div>
+            @{Html.RenderPartial("_RightMenuPartial");}
+
+        </div><!-- /.container -->
+    </div>
+
+    @{Html.RenderPartial("_foot");}
+
+    @MiniProfiler.RenderIncludes()
+
+
+    @Scripts.Render("~/bundles/js")
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
