@@ -1,0 +1,30 @@
+﻿@model qiushi.Entity.ArticleEntity
+
+@if (Model.Attachments != null && Model.Attachments.Count() > 0)
+{
+
+    var attachment = Model.Attachments.First();
+
+
+    if (attachment.Type == Constant.AttachmentType.Picture)
+    {
+        <img class="img-fluid" src="@attachment.Url" alt="囧人囧事" />
+    }
+    else
+    {
+        <div class="embed-responsive embed-responsive-16by9">
+
+            @if (attachment.Url.StartsWith("https://v.qq.com") || attachment.Url.StartsWith("http://player.youku.com"))
+            {
+                <iframe class="embed-responsive-item" src="@attachment.Url" allowfullscreen></iframe>
+            }
+            else
+            {
+                <video class="embed-responsive-item" controls>
+                    <source src="@attachment.Url" type="video/mp4">
+                </video>
+            }
+
+        </div>
+    }
+}

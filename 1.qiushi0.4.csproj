@@ -162,6 +162,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\GardenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageCodeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -213,8 +214,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="HttpErrors\500.html" />
     <Content Include="HttpErrors\txjb.html" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -239,17 +238,6 @@
     <Content Include="Content\font\fonts\open-iconic.woff" />
     <Content Include="Log4Net.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -294,10 +282,14 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_foot.cshtml" />
     <Content Include="Views\Home\_articlePartial.cshtml" />
+    <Content Include="Views\Shared\_attachment.cshtml" />
+    <Content Include="Views\Garden\Index.cshtml" />
+    <Content Include="Views\Garden\Detail.cshtml" />
+    <Content Include="Views\Shared\_LayoutMore.cshtml" />
+    <Content Include="Views\Home\Mian.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Youda\" />
   </ItemGroup>
   <ItemGroup>
@@ -311,7 +303,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\3.qiushi.Data.csproj">

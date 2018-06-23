@@ -1,0 +1,39 @@
+﻿@model IEnumerable<GardenEntity>
+
+@{
+
+    ViewBag.Title = "后花园 - 囧人囧事";
+}
+
+
+
+
+<div class="card ">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">首页</a></li>
+                <li class="breadcrumb-item active" aria-current="page">后花园</li>
+            </ol>
+        </nav>
+        <div class="garden-list">
+
+            @foreach (var garden in Model)
+            {
+                <a href="@Url.Action("Detail",new { id=garden.Id, page=1 })" class="list-item">
+                    <div class="list-title">@garden.Content</div>
+                    <div class="list-date">@garden.UpdateTime</div>
+                </a>
+
+            }
+
+        </div>
+
+    </div>
+
+
+</div>
+
+@{Html.RenderPartial("_PageNavigationPartial");}

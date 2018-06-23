@@ -19,10 +19,7 @@
         {
             <p class="card-text">@Model.Content</p>
 
-            if (Model.Attachments != null && Model.Attachments.Count() > 0)
-            {
-                <img class="img-fluid" src="@Model.Attachments.First().Url" alt="Card image cap">
-            }
+            Html.RenderPartial("_attachment", Model);
 
             <p class="card-text text-right">发布时间：@Model.CreatedTime</p>
 
@@ -46,7 +43,7 @@
     <script type="text/javascript">
         $(function () {
             $(".btn").on("click", function (event) {
-               
+
                 var modelId = 0;
                 @if(Model != null)
                 {
@@ -54,16 +51,16 @@
                 }
 
                // var formData = new FormData();
-              
+
                 var formData = "id=" + modelId + "&value=" + $(this).attr("data-value")
 
                 $.ajax({
                     url: '@Url.Action("Verify")',
                     type: 'post',
                     data: formData,
-                    
+
                     beforeSend: function () {
-                      
+
                     }
                 })
                 .done(function (data) {
@@ -73,7 +70,7 @@
                 });
             });
 
-           
+
         });
 
     </script>

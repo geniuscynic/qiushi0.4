@@ -83,5 +83,19 @@ namespace qiushi.Web.Controllers
             return PartialView("Index", articles);
         }
 
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult Mian()
+        {
+            return View();
+        }
     }
 }

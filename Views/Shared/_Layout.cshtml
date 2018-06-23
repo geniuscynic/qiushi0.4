@@ -11,7 +11,7 @@
     var controller = ViewContext.RouteData.Values["controller"].ToString();
     var action = ViewContext.RouteData.Values["action"].ToString();
 
-    string active1 = "", active2 = "", active3 = "", active4 = "";
+    string active1 = "", active2 = "", active3 = "", active4 = "", active5 = "";
 
     if (controller == "Home" && action == "Index")
     {
@@ -34,6 +34,10 @@
     {
         active4 = "active";
     }
+    else if (controller == "Garden" && action == "Index")
+    {
+        active5 = "active";
+    }
 }
 
 <!DOCTYPE html>
@@ -42,8 +46,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="keywords" content="囧人囧事,糗事,段子,内涵,笑话,爆笑笑话,幽默笑话,笑话大全,xiaohua,冷笑话,短信笑话,小笑话集锦,笑话短信,经典笑话,冷笑话大全,短笑话,搞笑短信,笑话吧,搞笑笑话,搞笑,幽默笑话" />
-    <meta name="description" content="囧人囧事提供各种笑话,糗事,段子,内涵,有经典笑话,幽默笑话,爆笑笑话,冷笑话,小笑话集锦,笑话大全,短信笑话,短笑话,爆笑短信,笑话短信,笑话故事,搞笑笑话,笑话吧,笑话大全乐翻天,开心每一天!" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="如何释放生活中的压力，并变压力为动力，一个有效轻松的方式就是幽默，看看别人的囧事，分享自己的囧事，不失为一种当下有效而时尚的选择。 让我们做到外囧内不囧、人囧心不囧，网站有囧心中无囧，没有最囧只有更囧，原来还有人比我更囧！" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+   
     <title>@ViewBag.Title</title>
 
 
@@ -51,7 +56,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-  
+
 
 </head>
 <body>
@@ -79,6 +84,9 @@
                     <li class="nav-item @active4">
                         <a class="nav-link" href="@Url.Action("Index","Article")">投稿</a>
                     </li>
+                    <li class="nav-item @active5">
+                        <a class="nav-link" href="@Url.Action("Index","Garden")">后花园</a>
+                    </li>
                 </ul>
 
                 @{Html.RenderPartial("_LoginPartial");}
@@ -91,7 +99,7 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-12 col-md-9">
                 @RenderBody()
             </div>
             <div class="col">
@@ -118,6 +126,16 @@
     @MiniProfiler.RenderIncludes()
 
     @Scripts.Render("~/bundles/js")
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?be29b6792dde11351b41e3241311c34d";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 
 
     @RenderSection("scripts", required: false)

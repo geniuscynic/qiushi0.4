@@ -28,6 +28,7 @@ namespace qiushi.Web.Controllers
         }
 
         [HttpPost]
+       
         public async Task<ActionResult> Save(FormCollection form)
         {
             var id = form["Id"];
@@ -57,8 +58,43 @@ namespace qiushi.Web.Controllers
             }
 
             article.Attachments = new List<AttachmentsEntity>();
+            
+            var imgUrl = form["imgUrl"];
+            var videoUrl = form["videoUrl"];
             var fileUrl = form["fileUrl"];
-            if (fileUrl != "")
+            
+            if(imgUrl != "")
+            {
+                var fileName = imgUrl.Substring(imgUrl.LastIndexOf("/") + 1);
+                var attachments = new AttachmentsEntity()
+                {
+                    FileName = fileName,
+                    Url = imgUrl,
+                    Type = Constant .AttachmentType .Picture 
+                };
+
+                //attachments.InitializeCommonField();
+                attachments.UpdateBy = CurrentUser.Id;
+
+
+                article.Attachments.Add(attachments);
+            }
+            else if(videoUrl != "")
+            {
+                var fileName = videoUrl.Substring(videoUrl.LastIndexOf("/") + 1);
+                var attachments = new AttachmentsEntity()
+                {
+                    FileName = fileName,
+                    Url = videoUrl
+                };
+
+                //attachments.InitializeCommonField();
+                attachments.UpdateBy = CurrentUser.Id;
+
+
+                article.Attachments.Add(attachments);
+            }
+            else if (fileUrl != "")
             {
                 var fileName = fileUrl.Substring(fileUrl.LastIndexOf("/") + 1);
                 var attachments = new AttachmentsEntity()
@@ -151,6 +187,13 @@ namespace qiushi.Web.Controllers
             PhotoTask task = new PhotoTask();
             var url = await task.UploadPhoto(file.FileName, file.ContentType, file.InputStream);
 
+            //var json = "{" +
+            //        "\"errno\": 0," +
+            //        "\"data\": [" +
+            //            "\"{0}\"" +
+            //        "]"+
+            //    "}";
+            //json = json.Replace("{0}", url.Item2);
             return Content(url.Item2);
         }
 

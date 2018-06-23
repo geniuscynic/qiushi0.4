@@ -11,10 +11,7 @@
 <div class="card-body articleBody ">
     <p class="card-text">@Html.Raw(Model.Content)</p>
 
-    @if (Model.Attachments != null && Model.Attachments.Count() > 0)
-    {
-        <img class="img-fluid" src="@Model.Attachments.First().Url" alt="Card image cap">
-    }
+    @{Html.RenderPartial("_attachment", Model); }
 
     <p class="card-text text-right">发布时间：@Model.CreatedTime</p>
 
@@ -39,7 +36,7 @@
         </ul>
 
         <ul class="nav card-bottom">
-           
+
             <li class="nav-item">
                 <a class="nav-link thumb-up" href="#"><span class="oi icon" data-glyph="thumb-up" title="thumb-up" aria-hidden="true"></span> 1</a>
             </li>

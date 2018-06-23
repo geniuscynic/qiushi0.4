@@ -19,30 +19,46 @@
 }
 
 @{Html.RenderPartial("_MessagePartial");}
+<div class="alert alert-danger errorMessage" role="alert" style=" display :none ">
 
+    <div class="d-flex justify-content-center">网络图片，网络视频，上传图片只能选择一种</div>
+
+</div>
 <div class="card">
 
     <div class="card-body">
 
         <form enctype="multipart/form-data" action="@Url.Action("Save")" method="post">
             <div class="form-group row">
-                <label for="user" class="col-form-label">糗事</label>
+                <label for="content" class="col-form-label">糗事</label>
                 <textarea class="form-control" rows="6" id="content" name="content" data-required="内容不能为空">@Model.Content</textarea>
+                @*<div id="editor" class="form-control"></div>*@
                 <div class="invalid-feedback"></div>
                 <input type="hidden" name="Id" value="@Model.Id" />
                 <input type="hidden" name="fileUrl" id="fileUrl" value="" />
             </div>
 
+            <div class="form-group row">
+                <label for="imgUrl" class="col-form-label col-2">网络图片</label>
+                <input type="text" id="imgUrl" name="imgUrl" class="form-control col-10" placeholder="http://www.xjjxmm.com/Content/img/logo.jpg" />
+            </div>
+            <div class="form-group row">
+                <label for="videoUrl" class="col-form-label col-2">网络视频</label>
+                <input type="text" id="videoUrl" name="videoUrl" class="form-control col-10" placeholder="http://player.youku.com/embed/XMzQxODcwNTc2MA==" />
+               
+            </div>
             <div class="form-group row uploadToolBar">
-                <input type="file" id="file" class="form-control-file" />
+
+                <label for="file" class="col-form-label col-2">上传图片</label>
+                <input type="file" id="file" name="file" class="form-control-file" />
             </div>
 
             <div class="form-group" id="loading">
-                <img src="~/Content/img/loading.gif" alt="...">
+                <img src="~/Content/img/loading.gif" alt="囧人囧事" />
             </div>
             <div class="form-group" id="imgTable" style="display:none">
                 <div class="col-2">
-                    <img src="" alt="...">
+                    <img src="" alt="囧人囧事">
                 </div>
                 <div class="col-4" style="padding-top:20px;">
                     <button type="button" class="btn btn-danger" aria-label="Left Align" id="remove">
@@ -53,6 +69,10 @@
             </div>
 
 
+
+            <div class="form-group row justify-content-center " style="color :red">
+                * 网络图片，网络视频，上传图片只能选择一种
+            </div>
             <div class="form-group">
                 <div class="col">
                     <button type="submit" class="btn btn-primary" id="btnSubmit">发表</button>
@@ -66,20 +86,72 @@
 
 
 @section scripts {
+    @*<script type="text/javascript" src="https://cdn.bootcss.com/js-xss/0.3.3/xss.min.js"></script>
+        <script type="text/javascript" src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>*@
+
     <script type="text/javascript">
+        @*var E = window.wangEditor
+        var editor = new E('#editor')
+
+        editor.customConfig.menus = [
+
+            'emoticon',  // 表情
+            'image',  // 插入图片
+
+            'video',  // 插入视频
+
+            'undo',  // 撤销
+        ];
+
+        editor.customConfig.onchange = function (html) {
+            // html 即变化之后的内容
+            $("#content").val(editor.txt.html());
+        };
+
+        editor.customConfig.uploadImgServer = '@Url.Action("UploadFile", "Article")';
+        editor.customConfig.uploadImgMaxLength = 1;
+        editor.customConfig.uploadFileName = 'file'
+        editor.customConfig.debug = true;
+        editor.create();*@
+
         $(function () {
             $("#loading").hide();
+            //$("#content").hide();
 
             $("#btnSubmit").on("click", function () {
+                $(".errorMessage").hide();
+
+                var flag1 = $("#imgUrl").val() != "";//外部图片
+                var flag2 = $("#videoUrl").val() != "";//外部video
+                var flag3 = $(".uploadToolBar").is(":hidden");//上传图片
+
+                var result = false;
+                if (flag1 && flag2) {
+                    result = true;
+                }
+                else if (flag1 && flag3){
+                    result = true;
+                }
+                else if (flag2 && flag3) {
+                    result = true;
+                }
+
+                if (result) {
+                    $(".errorMessage").show();
+                    return false;
+                }
+
                 return $.validate();
             });
+
+
 
             $("#file").on("change", function (event) {
                 var files = event.target.files[0];
 
                 var formData = new FormData();
                 formData.append("file", files);
-               
+
                 $.ajax({
                     url: '@Url.Action("UploadFile", "Article")',
                     type: 'post',

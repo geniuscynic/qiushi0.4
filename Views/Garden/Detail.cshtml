@@ -1,0 +1,34 @@
+﻿@model GardenEntity
+
+@{
+
+    ViewBag.Title = "后花园 - 囧人囧事";
+}
+
+<div class="card ">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">首页</a></li>
+                <li class="breadcrumb-item active" ><a href="@Url.Action("List", "Garden")">后花园</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Content</li>
+            </ol>
+        </nav>
+        <div class="garden-detail">
+            <div class="garden-title">@Model.Content </div>
+            <div class="w-100"></div>
+            @foreach (var attachment in Model.Attachments)
+            {
+                <img class="img-fluid" src="@attachment.Url" alt="后花园 - 囧人囧事" />
+                <div class="w-100"></div>
+            }
+        </div>
+
+    </div>
+
+
+</div>
+
+@{Html.RenderPartial("_PageNavigationPartial");}

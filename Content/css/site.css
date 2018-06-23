@@ -192,3 +192,114 @@ a.normalA:hover {
     background: rgba(0, 0, 0, 0.125);
     margin-bottom:1rem;
 }
+
+#editor {
+    padding:0;
+}
+
+.garden-list {
+    
+    border: 1px solid #EEF3FA;
+}
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: #CEDCF0 dashed 1px;
+}
+
+a.list-item:hover {
+    text-decoration: none;
+    background: #EEF3FA;
+   
+}
+
+.list-title {
+   
+}
+
+.list-date {
+   
+}
+
+.card .breadcrumb {
+    background: #EEF3FA;
+    border: #CEDCF0 dashed 1px;
+   
+}
+
+.garden-detail  {
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+
+}
+
+.garden-detail img {
+   padding-bottom:1rem;
+}
+
+.garden-title {
+   
+    padding:0.5rem;
+    font-size:22px;
+    color:crimson;
+}
+
+footer {
+    font-size:14px;
+}
+footer p {
+    margin-left: 1rem;
+    
+}
+
+.ablink a {
+    border-right: #ACBAD0 solid 1px;
+    padding:0 0.5rem;
+}
+
+    .ablink a:last-child {
+        border-right: none;
+       
+    }
+
+.img-fluid {
+    max-height: 100%;
+   height:100%;
+   width:100%;
+}
+
+.information h2 {
+    padding-bottom:1rem;
+}
+
+.information .col-9 {
+    border-right: 1px solid #f3f1ec;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.information .col {
+  
+    padding-left: 0;
+}
+
+
+.information ul.menu {
+    margin-top:3rem;
+    list-style:none;
+    
+}
+
+
+    .information ul.menu li:before {
+        content: "»";
+        color: #999;
+        padding-right:0.5rem;
+       
+    }
+
+    .information ul.menu li {
+       margin-bottom:15px;
+    }

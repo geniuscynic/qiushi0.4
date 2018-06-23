@@ -91,3 +91,4 @@ D:\workplace\qiushi0.4\qiushi0.4\bin\MiniProfiler.dll
 D:\workplace\qiushi0.4\qiushi0.4\bin\MiniProfiler.pdb
 D:\workplace\qiushi0.4\qiushi0.4\bin\MiniProfiler.xml
 D:\workplace\qiushi0.4\qiushi0.4\bin\RouteDebugger.dll
+D:\workplace\qiushi0.4\qiushi0.4\bin\1.txt

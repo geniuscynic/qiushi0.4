@@ -158,12 +158,35 @@ namespace qiushi.Web
                constraints: new { page = @"\d+" }
            );
 
-          //  routes.MapRoute(
-          //    name: "Enable",
-          //    url: "User/Disable/{id}/{page}",
-          //    defaults: new { controller = "User", action = "Disable" },
-          //    constraints: new { id = @"\d+", page = @"\d+" }
-          //);
+            routes.MapRoute(
+              name: "Garden",
+              url: "Garden/List/{page}",
+              defaults: new
+              {
+                  controller = "Garden",
+                  action = "List",
+                  page = 1
+              },
+              constraints: new { page = @"\d+" }
+          );
+
+            routes.MapRoute(
+             name: "GardenDetail",
+             url: "Garden/Detail/{id}_{page}",
+             defaults: new
+             {
+                 controller = "Garden",
+                 action = "Detail",
+                 page = 1
+             },
+             constraints: new { id = @"\d+", page = @"\d+" }
+         );
+            //  routes.MapRoute(
+            //    name: "Enable",
+            //    url: "User/Disable/{id}/{page}",
+            //    defaults: new { controller = "User", action = "Disable" },
+            //    constraints: new { id = @"\d+", page = @"\d+" }
+            //);
 
             routes.MapRoute(
                 name: "Default",

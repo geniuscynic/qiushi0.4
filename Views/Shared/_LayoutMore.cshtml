@@ -51,12 +51,28 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-9">
-                @RenderBody()
-            </div>
-            @{Html.RenderPartial("_RightMenuPartial");}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row information">
+                            <div class="col-9">
+                                @RenderBody()
+                            </div>
+                            <div class="col">
+                                <ul class="menu">
+                                    <li><a href="about">关于我们</a></li>
+                                    <li><a href="mian">免责声明</a></li>
+                                    <li><a href="contact">在线反馈</a></li>
+                                </ul>
 
-        </div><!-- /.container -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     @{Html.RenderPartial("_foot");}
